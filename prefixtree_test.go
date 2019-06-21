@@ -7,21 +7,33 @@ import (
 
 func BenchmarkPrefixTree(b *testing.B) {
 	b.Run("one char prefix tree", func(b *testing.B) {
-		words := []WordWithPayload{{"A", 10}}
+		words := WordsWithPayload{
+			Word:    []string{"A"},
+			Payload: []interface{}{10},
+			Length:  1,
+		}
 		for i := 0; i < b.N; i++ {
 			_ = MakePrefixTree(words)
 		}
 	})
 
 	b.Run("one word prefix tree", func(b *testing.B) {
-		words := []WordWithPayload{{"AB", 20}}
+		words := WordsWithPayload{
+			Word:    []string{"AB"},
+			Payload: []interface{}{20},
+			Length:  1,
+		}
 		for i := 0; i < b.N; i++ {
 			_ = MakePrefixTree(words)
 		}
 	})
 
 	b.Run("three words prefix tree", func(b *testing.B) {
-		words := []WordWithPayload{{"AB", 20}, {"AC", 30}, {"D", 40}}
+		words := WordsWithPayload{
+			Word:    []string{"AB", "AC", "D"},
+			Payload: []interface{}{20, 30, 40},
+			Length:  3,
+		}
 		for i := 0; i < b.N; i++ {
 			_ = MakePrefixTree(words)
 		}

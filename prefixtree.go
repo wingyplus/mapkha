@@ -6,9 +6,8 @@ import (
 
 // WordWithPayload is a pair of word and its payload
 type WordWithPayload struct {
-	Word    []string
-	Payload []interface{}
-	Len     int
+	Word    string
+	Payload interface{}
 }
 
 // PrefixTreeNode represents node in a prefix tree
