@@ -113,7 +113,7 @@ func testLookup(t *testing.T, expect *PrefixTreePointer, msg string) func(*Prefi
 		}
 
 		if !reflect.DeepEqual(expect, child) {
-			t.Errorf("Expect %q got %q", expect, child)
+			t.Errorf("Expect %v got %v", expect, child)
 		}
 	}
 }
