@@ -5,6 +5,29 @@ import (
 	"testing"
 )
 
+func BenchmarkPrefixTree(b *testing.B) {
+	b.Run("one char prefix tree", func(b *testing.B) {
+		words := []WordWithPayload{{"A", 10}}
+		for i := 0; i < b.N; i++ {
+			_ = MakePrefixTree(words)
+		}
+	})
+
+	b.Run("one word prefix tree", func(b *testing.B) {
+		words := []WordWithPayload{{"AB", 20}}
+		for i := 0; i < b.N; i++ {
+			_ = MakePrefixTree(words)
+		}
+	})
+
+	b.Run("three words prefix tree", func(b *testing.B) {
+		words := []WordWithPayload{{"AB", 20}, {"AC", 30}, {"D", 40}}
+		for i := 0; i < b.N; i++ {
+			_ = MakePrefixTree(words)
+		}
+	})
+}
+
 func TestOneCharPrefixTree(t *testing.T) {
 	words := []WordWithPayload{{"A", 10}}
 	prefixTree := MakePrefixTree(words)
