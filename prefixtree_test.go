@@ -35,14 +35,22 @@ func BenchmarkLoadDefaultDict(b *testing.B) {
 }
 
 func TestOneCharPrefixTree(t *testing.T) {
-	words := []WordWithPayload{{"A", 10}}
+	words := WordsWithPayload{
+		Word:    []string{"A"},
+		Payload: []interface{}{10},
+		Length:  1,
+	}
 	prefixTree := MakePrefixTree(words)
 	expect := &PrefixTreePointer{0, true, 10}
 	testLookup(t, expect, "Expect to find 0, 0, A")(prefixTree.Lookup(0, 0, 'A'))
 }
 
 func TestOneWordPrefixTree(t *testing.T) {
-	words := []WordWithPayload{{"AB", 20}}
+	words := WordsWithPayload{
+		Word:    []string{"AB"},
+		Payload: []interface{}{20},
+		Length:  1,
+	}
 	prefixTree := MakePrefixTree(words)
 
 	var expect *PrefixTreePointer
@@ -55,7 +63,11 @@ func TestOneWordPrefixTree(t *testing.T) {
 }
 
 func TestTwoWordsPrefixTree(t *testing.T) {
-	words := []WordWithPayload{{"AB", 20}, {"AC", 30}, {"D", 40}}
+	words := WordsWithPayload{
+		Word:    []string{"AB", "AC", "D"},
+		Payload: []interface{}{20, 30, 40},
+		Length:  3,
+	}
 	prefixTree := MakePrefixTree(words)
 
 	var expect *PrefixTreePointer
@@ -74,7 +86,11 @@ func TestTwoWordsPrefixTree(t *testing.T) {
 }
 
 func TestKaPrefixTree(t *testing.T) {
-	words := []WordWithPayload{{"กา", true}}
+	words := WordsWithPayload{
+		Word:    []string{"กา"},
+		Payload: []interface{}{true},
+		Length:  1,
+	}
 	prefixTree := MakePrefixTree(words)
 	var expect *PrefixTreePointer
 

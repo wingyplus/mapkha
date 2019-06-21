@@ -112,9 +112,8 @@ func TestBasicDictEdgeBuider(t *testing.T) {
 	context = EdgeBuildingContext{runes: text, I: 4, Ch: 'า',
 		Path: path, LeftBoundary: 0, BestEdge: nil}
 	edge := builder.Build(&context)
-
 	if edge == nil {
-		t.Errorf("Expect edge not to be nil")
+		t.Fatalf("Expect edge not to be nil")
 	}
 
 	if edge.S != 0 {

@@ -19,26 +19,38 @@ func LoadDict(path string) (*Dict, error) {
 		return nil, err
 	}
 	defer f.Close()
-	wordWithPayloads := make([]WordWithPayload, 0)
+
+	wordsWithPayload := WordsWithPayload{
+		Word:    []string{},
+		Payload: []interface{}{},
+		Length:  0,
+	}
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		if line := scanner.Text(); len(line) != 0 {
-			wordWithPayloads = append(wordWithPayloads,
-				WordWithPayload{line, true})
+			wordsWithPayload.Word = append(wordsWithPayload.Word, line)
+			wordsWithPayload.Payload = append(wordsWithPayload.Payload, true)
+			wordsWithPayload.Length++
 		}
 	}
-	tree := MakePrefixTree(wordWithPayloads)
+	tree := MakePrefixTree(wordsWithPayload)
 	dix := Dict{tree}
 	return &dix, nil
 }
 
 func MakeDict(words []string) *Dict {
-	wordWithPayloads := make([]WordWithPayload, 0)
-	for _, word := range words {
-		wordWithPayloads = append(wordWithPayloads,
-			WordWithPayload{word, true})
+	wordsWithPayload := WordsWithPayload{
+		Word:    []string{},
+		Payload: []interface{}{},
+		Length:  0,
 	}
-	tree := MakePrefixTree(wordWithPayloads)
+
+	for _, word := range words {
+		wordsWithPayload.Word = append(wordsWithPayload.Word, word)
+		wordsWithPayload.Payload = append(wordsWithPayload.Payload, true)
+		wordsWithPayload.Length++
+	}
+	tree := MakePrefixTree(wordsWithPayload)
 	dix := Dict{tree}
 	return &dix
 }

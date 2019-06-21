@@ -1,11 +1,14 @@
 package mapkha
 
-import "sort"
+import (
+	"sort"
+)
 
 // WordWithPayload is a pair of word and its payload
 type WordWithPayload struct {
-	Word    string
-	Payload interface{}
+	Word    []string
+	Payload []interface{}
+	Len     int
 }
 
 // PrefixTreeNode represents node in a prefix tree
@@ -27,29 +30,35 @@ type PrefixTree struct {
 	tab map[PrefixTreeNode]*PrefixTreePointer
 }
 
-type byWord []WordWithPayload
+type byWord WordsWithPayload
 
-func (wordsWithPayload byWord) Len() int {
-	return len(wordsWithPayload)
+func (payload byWord) Len() int {
+	return payload.Length
 }
 
-func (wordsWithPayload byWord) Swap(i, j int) {
-	wordsWithPayload[i], wordsWithPayload[j] =
-		wordsWithPayload[j], wordsWithPayload[i]
+func (payload byWord) Swap(i, j int) {
+	payload.Word[i], payload.Word[j] = payload.Word[j], payload.Word[i]
+	payload.Payload[i], payload.Payload[j] = payload.Payload[j], payload.Payload[i]
 }
 
-func (wordsWithPayload byWord) Less(i, j int) bool {
-	return wordsWithPayload[i].Word < wordsWithPayload[j].Word
+func (payload byWord) Less(i, j int) bool {
+	return payload.Word[i] < payload.Word[j]
+}
+
+type WordsWithPayload struct {
+	Word    []string
+	Payload []interface{}
+	Length  int
 }
 
 // MakePrefixTree is for constructing prefix tree for word with payload list
-func MakePrefixTree(wordsWithPayload []WordWithPayload) *PrefixTree {
+func MakePrefixTree(wordsWithPayload WordsWithPayload) *PrefixTree {
 	sort.Sort(byWord(wordsWithPayload))
 	tab := make(map[PrefixTreeNode]*PrefixTreePointer)
 
-	for i, wordWithPayload := range wordsWithPayload {
-		word := wordWithPayload.Word
-		payload := wordWithPayload.Payload
+	for i := 0; i < wordsWithPayload.Length; i++ {
+		word := wordsWithPayload.Word[i]
+		payload := wordsWithPayload.Payload[i]
 		rowNo := 0
 
 		runes := []rune(word)
