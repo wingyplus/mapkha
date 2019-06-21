@@ -28,6 +28,12 @@ func BenchmarkPrefixTree(b *testing.B) {
 	})
 }
 
+func BenchmarkLoadDefaultDict(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_, _ = LoadDefaultDict()
+	}
+}
+
 func TestOneCharPrefixTree(t *testing.T) {
 	words := []WordWithPayload{{"A", 10}}
 	prefixTree := MakePrefixTree(words)
